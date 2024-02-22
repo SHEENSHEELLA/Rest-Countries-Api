@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import React from 'react'
 
 const InputContainer = styled.label`
-  background-color: var(--color-ui-base);
+  background-color: var(--colors-ui-base);
   padding: 1rem 2rem;
   display: flex;
   align-items: center;
@@ -27,8 +27,8 @@ const Input = styled.input.attrs({
   margin-left: 2rem;
   border: none;
   outline: none;
-  ${'' /* background-color: var(--colors-bg); */}
   color: var(--colors-text);
+  background-color: var(--colors-ui-base);
 `
 
 export const Search = ({ search, setSearch }) => {
