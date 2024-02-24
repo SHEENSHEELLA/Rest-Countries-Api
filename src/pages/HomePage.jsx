@@ -10,10 +10,13 @@ import { ALL_COUNTRIES } from '../config'
 
 export const HomePage = ({ countries, setCountries }) => {
   const [filteredCountries, setFilteredCountries] = useState([])
+  const [loading, setLoading] = useState(true)
 
   const navigate = useNavigate()
 
   const handleSearch = (search, region) => {
+    console.log('Search:', search)
+    console.log('Region:', region)
     let data = [...countries]
 
     if (region) {
@@ -24,51 +27,68 @@ export const HomePage = ({ countries, setCountries }) => {
         c.name.common.toLowerCase().includes(search.toLowerCase())
       )
     }
-
+    console.log('Data:', data)
     setFilteredCountries(data)
   }
 
-  console.log(countries)
+  console.log('Countries:', countries)
+  console.log('Filtered countries:', filteredCountries)
 
   useEffect(() => {
-    if (!countries.length) {
-      axios.get(ALL_COUNTRIES).then(({ data }) => setCountries(data))
+    if (countries.length === 0) {
+      axios
+        .get(ALL_COUNTRIES)
+        .then(({ data }) => {
+          setCountries(data)
+          setLoading(false)
+        })
+        .catch((error) => console.error('Error fetching countries:', error))
+    } else {
+      setLoading(false)
     }
+    // eslint-disable-next-line
   }, [])
 
   return (
     <>
       <Controls onSearch={handleSearch} />
-      <List>
-        {filteredCountries.map((c) => {
-          const countryInfo = {
-            img: c.flags.png,
-            name: c.name.common,
-            info: [
-              {
-                title: 'Population',
-                description: c.population.toLocaleString(),
-              },
-              {
-                title: 'Region',
-                description: c.region,
-              },
-              {
-                title: 'Capital',
-                description: c.capital,
-              },
-            ],
-          }
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <List>
+          {!loading &&
+            (filteredCountries.length > 0 ? filteredCountries : countries).map(
+              (c) => {
+                const countryInfo = {
+                  img: c.flags.png,
+                  name: c.name.common,
+                  info: [
+                    {
+                      title: 'Population',
+                      description: c.population.toLocaleString(),
+                    },
+                    {
+                      title: 'Region',
+                      description: c.region,
+                    },
+                    {
+                      title: 'Capital',
+                      description: c.capital,
+                    },
+                  ],
+                }
 
-          return (
-            <Card
-              key={c.name.common}
-              onClick={() => navigate(`/country/${c.name.common}`)}
-              {...countryInfo}
-            />
-          )
-        })}
-      </List>
+                return (
+                  <Card
+                    key={c.name.common}
+                    onClick={() => navigate(`/country/${c.name.common}`)}
+                    {...countryInfo}
+                  />
+                )
+              }
+            )}
+        </List>
+      )}
     </>
   )
 }

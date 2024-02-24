@@ -10,14 +10,12 @@ import { NotFound } from './pages/NotFound'
 
 function App() {
   const [countries, setCountries] = useState([])
+  console.log('Cheack', countries)
   return (
     <>
       <Header />
       <Main>
         <Routes>
-          {/* <Route exact path="/">
-            <HomePage />
-          </Route> */}
           <Route
             exact
             path="/"

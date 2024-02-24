@@ -29,7 +29,7 @@ export const Controls = ({ onSearch }) => {
   const [region, setRegion] = useState('')
 
   useEffect(() => {
-    console.log('region', region)
+    console.log(region)
     const regionValue = region?.value || ''
     onSearch(search, regionValue)
   }, [search, region])
