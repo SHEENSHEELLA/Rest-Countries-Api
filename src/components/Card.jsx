@@ -45,7 +45,6 @@ const CardListItem = styled.li`
 `
 
 export const Card = ({ img, name, info = [], onClick }) => {
-  console.log('info', Array.isArray(info))
   return (
     <Wrapper onClick={onClick}>
       <CardImage src={img} alt={name} />
