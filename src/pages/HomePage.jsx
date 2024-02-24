@@ -8,10 +8,25 @@ import { List } from '../components/List'
 import { Card } from '../components/Card'
 import { ALL_COUNTRIES } from '../config'
 
-export const HomePage = ({ setCountries, countries }) => {
-  // const [countries, setCountries] = useState([])
+export const HomePage = ({ countries, setCountries }) => {
+  const [filteredCountries, setFilteredCountries] = useState([])
 
   const navigate = useNavigate()
+
+  const handleSearch = (search, region) => {
+    let data = [...countries]
+
+    if (region) {
+      data = data.filter((c) => c.region.includes(region))
+    }
+    if (search) {
+      data = data.filter((c) =>
+        c.name.common.toLowerCase().includes(search.toLowerCase())
+      )
+    }
+
+    setFilteredCountries(data)
+  }
 
   console.log(countries)
 
@@ -23,9 +38,9 @@ export const HomePage = ({ setCountries, countries }) => {
 
   return (
     <>
-      <Controls />
+      <Controls onSearch={handleSearch} />
       <List>
-        {countries.map((c) => {
+        {filteredCountries.map((c) => {
           const countryInfo = {
             img: c.flags.png,
             name: c.name.common,
