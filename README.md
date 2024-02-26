@@ -1,4 +1,20 @@
-# Getting Started with Create React App
+# REST Countries API with color theme switcher
+
+Original task: [Frontend Mentor Challenge](https://www.frontendmentor.io/challenges/rest-countries-api-with-color-theme-switcher-5cacc469fec04111f7b848ca)
+
+- Demo and problem statement
+- Working with style-guide
+- Header template
+- Switch between themes
+- Header styles
+- Working with the form
+- REST API service
+- Display a list of countries
+- Setting up routing
+- Filtering functionality
+- Detail page
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
