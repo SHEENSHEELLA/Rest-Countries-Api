@@ -1,12 +1,11 @@
 import React from 'react'
 import { Main } from '../components/Main'
 
-export const NotFound = ({ message, borders }) => {
+export const Loading = () => {
   return (
     <Main>
       <div>
-        {!borders && <h1>This page doesn't exist</h1>}
-        <p>{message}</p>
+        <h1>Loading...</h1>
       </div>
     </Main>
   )

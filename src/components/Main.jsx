@@ -4,6 +4,7 @@ import { Container } from './Container'
 
 const Wrapper = styled.main`
   padding: 2rem 0;
+  background-color: var(--colors-bg);
 
   @media (min-width: 768px) {
     padding: 4rem 0;

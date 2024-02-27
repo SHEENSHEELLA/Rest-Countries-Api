@@ -1,16 +1,19 @@
 import React from 'react'
-import axios from 'axios'
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { Controls } from '../components/Controls'
 import { List } from '../components/List'
 import { Card } from '../components/Card'
-import { ALL_COUNTRIES } from '../config'
+import { ALL_COUNTRIES } from '../utils/config'
+import { fetchData } from '../utils/Utils'
+import { NotFound } from './NotFound'
+import { Loading } from '../components/Loading'
 
 export const HomePage = ({ countries, setCountries }) => {
   const [filteredCountries, setFilteredCountries] = useState([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
   const navigate = useNavigate()
 
@@ -36,24 +39,26 @@ export const HomePage = ({ countries, setCountries }) => {
 
   useEffect(() => {
     if (countries.length === 0) {
-      axios
-        .get(ALL_COUNTRIES)
-        .then(({ data }) => {
+      fetchData(ALL_COUNTRIES)
+        .then((data) => {
           setCountries(data)
           setLoading(false)
         })
-        .catch((error) => console.error('Error fetching countries:', error))
+        .catch((error) => {
+          setError('Error fetching all countries: ' + error.message) // Установка сообщения об ошибке
+          setLoading(false)
+        })
     } else {
       setLoading(false)
     }
-    // eslint-disable-next-line
   }, [])
 
   return (
     <>
       <Controls onSearch={handleSearch} />
+      {error && <NotFound message={error} />}
       {loading ? (
-        <p>Loading...</p>
+        <Loading />
       ) : (
         <List>
           {!loading &&
