@@ -21,6 +21,11 @@ export const CustomSelect = styled(Select).attrs({
         ? 'var(--colors-bg)'
         : 'var(--colors-ui-base)',
     }),
+    menuList: (provided) => ({
+      ...provided,
+      backgroundColor: 'var(--colors-ui-base)', // Цвет фона
+      padding: '0', // Убираем отступы
+    }),
   },
 })`
   width: 200px;
